@@ -57,5 +57,7 @@ real medical record was used.
 
 ## Documents
 
-`DBMS Report docx` and `DBMS ppt.pptx` are the accompanying coursework report
-and presentation.
+The coursework report and presentation are not committed here. They carry the
+names and university registration numbers of the three other students on the
+team, and publishing those in a public repository is not mine to do. Available
+on request.
