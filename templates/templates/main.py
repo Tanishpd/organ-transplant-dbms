@@ -1,3 +1,4 @@
+import os
 from flask import Flask,render_template,session,request,redirect,url_for,flash
 import mysql.connector,hashlib
 import matplotlib.pyplot as plt
@@ -5,9 +6,9 @@ import numpy as np
 
 
 mydb = mysql.connector.connect(
-  host='localhost',
-  user='root',
-  password='MYSQL_PASSWORD_PURGED_ROTATE_ME',
+  host=os.environ.get('MYSQL_HOST', 'localhost'),
+  user=os.environ.get('MYSQL_USER', 'root'),
+  password=os.environ.get('MYSQL_PASSWORD', ''),
   database='DBMS_PROJECT'
 )
 mycursor = mydb.cursor(buffered=True)

@@ -1,9 +1,10 @@
+import os
 import mysql.connector
 
 # Define the database connection parameters
 username = 'root'
-password = 'MYSQL_PASSWORD_PURGED_ROTATE_ME'
-host = 'localhost'
+password=os.environ.get('MYSQL_PASSWORD', '')
+host=os.environ.get('MYSQL_HOST', 'localhost')
 database = 'DBMS_PROJECT'
 
 # Establish the connection

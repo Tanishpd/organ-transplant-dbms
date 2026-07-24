@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify
 import mysql.connector
 
@@ -6,10 +7,10 @@ app = Flask(__name__)
 
 # Connect to the database
 cnx = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="MYSQL_PASSWORD_PURGED_ROTATE_ME",
-    database="DBMS_PROJECT"
+    host=os.environ.get("MYSQL_HOST", "localhost"),
+    user=os.environ.get("MYSQL_USER", "root"),
+    password=os.environ.get("MYSQL_PASSWORD", ""),
+    database=os.environ.get("MYSQL_DB", "DBMS_PROJECT")
 )
 
 # Create a cursor object
