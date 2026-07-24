@@ -61,3 +61,21 @@ The coursework report and presentation are not committed here. They carry the
 names and university registration numbers of the three other students on the
 team, and publishing those in a public repository is not mine to do. Available
 on request.
+
+## Security note — coursework, do not deploy
+
+This was a database-design assignment; the application layer in `templates/`
+was not written to production standards and has known problems:
+
+- **SQL injection.** Most queries interpolate request data into the SQL string
+  rather than using parameters. The login query has been fixed, since that one
+  is reachable without credentials, but the rest have not. Do not expose this
+  to untrusted input.
+- **Plaintext passwords.** The `login` table stores and compares passwords in
+  the clear rather than hashing them.
+
+Database credentials are read from the environment (`MYSQL_HOST`, `MYSQL_USER`,
+`MYSQL_PASSWORD`, `MYSQL_DB`); they used to be hardcoded.
+
+The schema and the ER model — the actual point of the assignment — are in
+`sql database/` and `er diagram.png`.

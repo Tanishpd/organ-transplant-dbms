@@ -1,13 +1,14 @@
+import os
 from flask import Flask,render_template,session,request,redirect,url_for,flash
 import mysql.connector,hashlib
 import matplotlib.pyplot as plt
 import numpy as np
 
 mydb = mysql.connector.connect(
-  host='localhost',
-  user='root',
-  password='MYSQL_PASSWORD_PURGED_ROTATE_ME',
-  database = 'DBMS_PROJECT'
+  host=os.environ.get('MYSQL_HOST', 'localhost'),
+  user=os.environ.get('MYSQL_USER', 'root'),
+  password=os.environ.get('MYSQL_PASSWORD', ''),
+  database=os.environ.get('MYSQL_DB', 'DBMS_PROJECT')
 )
 mycursor = mydb.cursor(buffered=True)
 
@@ -27,8 +28,10 @@ def home():
 @app.route("/login",methods = ['GET','POST'])
 def login():
     if request.method=='POST' :
-        query = """SELECT * FROM login WHERE username = '%s'""" %(request.form['username'])
-        mycursor.execute(query)
+        # Parameterised: the username arrives from an unauthenticated form, so
+        # interpolating it here let anyone bypass login with ' OR '1'='1.
+        query = "SELECT * FROM login WHERE username = %s"
+        mycursor.execute(query, (request.form['username'],))
         res = mycursor.fetchall()
         if mycursor.rowcount == 0:
             return home()
